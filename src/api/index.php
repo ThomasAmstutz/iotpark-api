@@ -66,6 +66,35 @@ route('get', $sub_dir . '/parkings/([0-9]+)/sensors/([0-9]+)', function ($matche
     exit();
 });
 
+/**
+ * Return the results for a sensor
+ */
+route('get', $sub_dir . '/sensors/([0-9]+)/results', function ($matches, $rxd) {
+    $sensorId = $matches[1][0];
+
+    $data = getResults($sensorId);
+    
+    validateData($data, 'get');
+    
+    echo json_encode($data);
+    exit();
+});
+
+/**
+ * Return a result from a sensor
+ */
+route('get', $sub_dir . '/sensors/([0-9]+)/results/([0-9]+)', function ($matches, $rxd) {
+    $sensorId = $matches[1][0];
+    $resultId = $matches[2][0];
+
+    $data = getResultsById($sensorId, $resultId);
+    
+    validateData($data, 'get');
+    
+    echo json_encode($data);
+    exit();
+});
+
 /**** POST ****/
 /**
  * Add a parking
@@ -113,7 +142,7 @@ route('post', $sub_dir . '/parkings/([0-9]+)/sensors/results', function ($matche
     $parkingData = getParkingById($parkingId);
     
     if (!empty($postData) && !empty($parkingData)) {
-        $data = addResult($postData['data'], $postData['device'], $postData['seqNumber'], $postData['time'], $parkingId);
+        $data = addResult($postData['data'], $postData['device'], $postData['time'], $postData['seqNumber'], $parkingId);
         
         validateData($data, 'post');
     }

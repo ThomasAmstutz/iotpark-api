@@ -153,6 +153,60 @@
   }
 
   /**
+   * Select all the results sent by a sensor
+   * @param $sensorId The id of the sensor
+   * @return the found results
+   */
+  function getResults($sensorId){
+    try {
+      $dbh = conn_db();
+      
+      $sql = "SELECT *
+              FROM results
+              WHERE results.fk_sensor = :id;";
+
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindParam(':id', $sensorId, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      die();
+    }
+
+    return $stmt->fetchAll();
+  }
+
+  /**
+   * Select a result sent by a sensor
+   * @param $sensorId The id of the sensor
+   * @param $resultId The id of the result
+   * @return the result that has been found
+   */
+  function getResultsById($sensorId, $resultId){
+    try {
+      $dbh = conn_db();
+      
+      $sql = "SELECT *
+              FROM results
+              WHERE results.fk_sensor = :id AND results.id = :resultId;";
+
+      $stmt = $dbh->prepare($sql);
+      $stmt->bindParam(':id', $sensorId, PDO::PARAM_INT);
+      $stmt->bindParam(':resultId', $resultId, PDO::PARAM_INT);
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+      $stmt->execute();
+    } catch (PDOException $e) {
+      echo $e->getMessage();
+      die();
+    }
+
+    return $stmt->fetchAll();
+  }
+
+  /**
    * Add a new parking in the database
    * @param $name The name of the parking
    * @param $address The address of the parking
@@ -226,7 +280,7 @@
       $sensorId = getSensorBySigfoxId($sensorSigfoxId);
 
       if ($sensorId == 0) {
-        addSensor($sensorSigfoxId, $parkingId);
+        $sensorId = addSensor($sensorSigfoxId, $parkingId);
       }
 
       $sql = "INSERT INTO results (occupation, date, sequence, temperature, idleVoltage, transmissionVoltage, firmwareVersion, magnetometerX, magnetometerY, magnetometerZ, messageType, fk_sensor)
