@@ -142,7 +142,7 @@ route('post', $sub_dir . '/parkings/([0-9]+)/sensors/results', function ($matche
     $parkingData = getParkingById($parkingId);
     
     if (!empty($postData) && !empty($parkingData)) {
-        $data = addResult($postData['data'], $postData['device'], $postData['time'], $postData['seqNumber'], $parkingId);
+        $data = addResult($postData['data'], $postData['device'], $postData['timestamp'], $postData['seqNumber'], $parkingId);
         
         validateData($data, 'post');
     }

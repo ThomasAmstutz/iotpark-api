@@ -276,7 +276,7 @@
       $dbh = conn_db();
       $data = json_decode(convertSensorData($sensorData), true);
 
-      $date = convertEpoch($epochDate);
+      $date = convertEpoch($epochDate, true, 2);
       $sensorId = getSensorBySigfoxId($sensorSigfoxId);
 
       if ($sensorId == 0) {
