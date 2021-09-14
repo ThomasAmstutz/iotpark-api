@@ -13,8 +13,9 @@
 ## Post
 | URI | Description | State |
 -|-|-|
-| /api/parkings                | Add a parking             | Done |
-| /api/parkings/<int\>/sensors | Add a sensor to a parking | Done |
+| /api/parkings                        | Add a parking             | Done |
+| /api/parkings/<int\>/sensors         | Add a sensor to a parking | Done |
+| /api/parkings/<int\>/sensors/results | Add a result              | Done |
 
 <br>
 
