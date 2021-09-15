@@ -19,7 +19,7 @@ ALTER TABLE sensors
 
 CREATE TABLE results (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  occupation BIT NOT NULL,
+  occupation INT NOT NULL,
   date DATETIME NOT NULL,
   sequence INT NOT NULL,
   temperature INT NOT NULL,
