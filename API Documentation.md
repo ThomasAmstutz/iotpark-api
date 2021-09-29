@@ -85,6 +85,6 @@ Parking ID (int) parameter in the URI
 | parkingId | ID of the parking in the database                     | Yes |
 
 ### PUT parameters
-TODO
+*TODO*
 ### DELETE parameters
-TODO
+*TODO*
