@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "52bd14b6-bf64-44aa-8ca2-f14b71271fe8",
+		"name": "IoT Park API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET parkings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET parking from id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings/1",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a sensor in a parking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors/1",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings",
+						"1",
+						"sensors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET sensors in a parking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings",
+						"1",
+						"sensors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET results from a sensor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/sensors/1/results",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"sensors",
+						"1",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a result from a sensor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/sensors/1/results/1",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"sensors",
+						"1",
+						"results",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST add parking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"testName\",\r\n    \"address\": \"Cité des Microtechniques\",\r\n    \"city\": \"Porrentruy\",\r\n    \"country\": \"CH\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST add a sensor in a parking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deviceId\": \"1E8C42\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings",
+						"1",
+						"sensors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST add a result to a sensor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"timestamp\" : 1634657000,\r\n  \"device\" : \"1E8C42\",\r\n  \"seqNumber\" : \"1783\",\r\n  \"data\" : \"121d001d5800000000000003\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors/results",
+					"protocol": "https",
+					"host": [
+						"iotpark",
+						"divtec",
+						"me"
+					],
+					"path": [
+						"api",
+						"parkings",
+						"1",
+						"sensors",
+						"results"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
