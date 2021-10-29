@@ -32,7 +32,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/parkings/1",
+					"raw": "https://iotpark.divtec.me/api/parkings/{{parkingId}}",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -42,7 +42,7 @@
 					"path": [
 						"api",
 						"parkings",
-						"1"
+						"{{parkingId}}"
 					]
 				}
 			},
@@ -54,7 +54,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors/1",
+					"raw": "https://iotpark.divtec.me/api/parkings/{{parkingId}}/sensors/{{sensorId}}",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -64,9 +64,9 @@
 					"path": [
 						"api",
 						"parkings",
-						"1",
+						"{{parkingId}}",
 						"sensors",
-						"1"
+						"{{sensorId}}"
 					]
 				}
 			},
@@ -78,7 +78,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors",
+					"raw": "https://iotpark.divtec.me/api/parkings/{{parkingId}}/sensors",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -88,7 +88,7 @@
 					"path": [
 						"api",
 						"parkings",
-						"1",
+						"{{parkingId}}",
 						"sensors"
 					]
 				}
@@ -101,7 +101,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/sensors/1/results",
+					"raw": "https://iotpark.divtec.me/api/sensors/{{sensorId}}/results",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -111,7 +111,7 @@
 					"path": [
 						"api",
 						"sensors",
-						"1",
+						"{{sensorId}}",
 						"results"
 					]
 				}
@@ -124,7 +124,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/sensors/1/results/1",
+					"raw": "https://iotpark.divtec.me/api/sensors/{{sensorId}}/results/{{resultId}}",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -134,9 +134,9 @@
 					"path": [
 						"api",
 						"sensors",
-						"1",
+						"{{sensorId}}",
 						"results",
-						"1"
+						"{{resultId}}"
 					]
 				}
 			},
@@ -187,7 +187,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors",
+					"raw": "https://iotpark.divtec.me/api/parkings/{{parkingId}}/sensors",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -197,7 +197,7 @@
 					"path": [
 						"api",
 						"parkings",
-						"1",
+						"{{parkingId}}",
 						"sensors"
 					]
 				}
@@ -219,7 +219,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://iotpark.divtec.me/api/parkings/1/sensors/results",
+					"raw": "https://iotpark.divtec.me/api/parkings/{{parkingId}}/sensors/results",
 					"protocol": "https",
 					"host": [
 						"iotpark",
@@ -229,7 +229,7 @@
 					"path": [
 						"api",
 						"parkings",
-						"1",
+						"{{parkingId}}",
 						"sensors",
 						"results"
 					]
@@ -256,6 +256,20 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "parkingId",
+			"value": "1"
+		},
+		{
+			"key": "sensorId",
+			"value": "1"
+		},
+		{
+			"key": "resultId",
+			"value": "1"
 		}
 	]
 }
