@@ -1,4 +1,131 @@
 <?php
+
+/*********************************
+ *                               *
+ *           API KEYS            *
+ *                               *
+ *********************************/
+
+  /**
+   * Verify if a key has been sent
+   * @param $headers headers sent by the client
+   * @return true or false depending on the presence of an api key
+   */
+  function checkForKey($headers) {
+    return array_key_exists('api-key', $headers) ? (true) : false;
+  }
+
+  /**
+   * Check if a key is the API Keys file
+   * @param $key Key to check
+   * @return true if the key is valid or false if it's not
+   */
+  function isValidKey($key) {
+    $file = file_get_contents(API_KEYS);
+    $json = json_decode($file, true);
+    foreach ($json as $item) {
+      if ($item["key"] == $key)
+        return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Check if a key can read a value
+   * @param $key Key to check
+   * @return true if the key can read the database
+   */
+  function canRead($key) {
+    $file = file_get_contents(API_KEYS);
+    $json = json_decode($file, true);
+    foreach ($json as $item) {
+      if ($item["key"] == $key)
+        return $item['can_read'];
+    }
+  }
+
+  /**
+   * Check if a key can add a value
+   * @param $key Key to check
+   * @return true if the key can add in the database
+   */
+  function canAdd($key) {
+    $file = file_get_contents(API_KEYS);
+    $json = json_decode($file, true);
+    foreach ($json as $item) {
+      if ($item["key"] == $key)
+        return $item['can_add'];
+    }
+  }
+
+  /**
+   * Check if a key can update a value
+   * @param $key Key to check
+   * @return true if the key can update in the database
+   */
+  function canUpdate($key) {
+    $file = file_get_contents(API_KEYS);
+    $json = json_decode($file, true);
+    foreach ($json as $item) {
+      if ($item["key"] == $key)
+        return $item['can_update'];
+    }
+  }
+
+  /**
+   * Check if a key can delete a value
+   * @param $key Key to check
+   * @return true if the key can delete in the database
+   */
+  function canDelete($key) {
+    $file = file_get_contents(API_KEYS);
+    $json = json_decode($file, true);
+    foreach ($json as $item) {
+      if ($item["key"] == $key)
+        return $item['can_delete'];
+    }
+  }
+
+  /**
+   * @return all the API keys
+   */
+  function getAllKeys() {
+    $file = file_get_contents(API_KEYS);
+    return $file;
+  }
+
+  /**
+   * Check if a key can be used
+   * @param $method the method used by the request who sent the key
+   * @return an error message if the key can't be used. Returns "true" when the key can be used
+   */
+  function processKey($method) {
+    $requestHeaders = getallheaders();
+    if (checkForKey($requestHeaders)) {
+      $apiKey = $requestHeaders['api-key'];
+
+      if (isValidKey($apiKey)) {
+        $canDoAction = ($method == 'get') ? canRead($apiKey) : canAdd($apiKey);
+
+        if ($canDoAction) {
+          return true;
+        } else {
+          $data = "The provided key can't do this action";
+          http_response_code(400);
+        }
+      } else {
+          $data = "The provided API Key can't be used for this request";
+          http_response_code(400);
+      }
+    } else {
+        $data = "No API Key was provided in the header";
+        http_response_code(400);
+    }
+
+    return $data;
+  }
+
 /*********************************
  *                               *
  *           FUNCTIONS           *
@@ -31,11 +158,13 @@
     $error = ($method == 'get') ? (404) : (400);
     $ok = ($method == 'get') ? (200) : (201);
 
-    if (empty($data)) {
-      http_response_code($error);
-      $data = "{}";
-    } else {
-      http_response_code($ok);
+    if (http_response_code() != 400) {
+      if (empty($data)) {
+        http_response_code($error);
+        $data = "{}";
+      } else {
+        http_response_code($ok);
+      }
     }
   }
 
