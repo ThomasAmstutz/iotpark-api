@@ -19,13 +19,9 @@ header('Content-Type: application/json');
  * Return all the parkings
  */
 route('get', $sub_dir . '/parkings', function ($matches, $rxd) {
-    $data = processKey('get');
-
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getAllParkings();
-    }
-
+    $data = getAllParkings();
+    
+    http_response_code(200);
     echo json_encode($data);
     exit();
 });
@@ -35,12 +31,7 @@ route('get', $sub_dir . '/parkings', function ($matches, $rxd) {
  */
 route('get', $sub_dir . '/parkings/([0-9]+)', function ($matches, $rxd) {
     $id = $matches[1][0];
-    $data = processKey('get');
-
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getParkingById($id);
-    }
+    $data = getParkingById($id);
     
     validateData($data, 'get');
 
@@ -53,12 +44,7 @@ route('get', $sub_dir . '/parkings/([0-9]+)', function ($matches, $rxd) {
  */
 route('get', $sub_dir . '/parkings/([0-9]+)/sensors', function ($matches, $rxd) {
     $id = $matches[1][0];
-    $data = processKey('get');
-
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getSensorsByParkingsId($id);
-    }
+    $data = getSensorsByParkingsId($id);
     
     validateData($data, 'get');
 
@@ -72,12 +58,7 @@ route('get', $sub_dir . '/parkings/([0-9]+)/sensors', function ($matches, $rxd) 
 route('get', $sub_dir . '/parkings/([0-9]+)/sensors/([0-9]+)', function ($matches, $rxd) {
     $id = $matches[1][0];
     $sensorId = $matches[2][0];
-    $data = processKey('get');
-
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getSensorsByIdAndParkingsId($id, $sensorId);
-    }
+    $data = getSensorsByIdAndParkingsId($id, $sensorId);
     
     validateData($data, 'get');
 
@@ -90,12 +71,8 @@ route('get', $sub_dir . '/parkings/([0-9]+)/sensors/([0-9]+)', function ($matche
  */
 route('get', $sub_dir . '/sensors/([0-9]+)/results', function ($matches, $rxd) {
     $sensorId = $matches[1][0];
-    $data = processKey('get');
 
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getResults($sensorId);
-    }
+    $data = getResults($sensorId);
     
     validateData($data, 'get');
     
@@ -109,12 +86,8 @@ route('get', $sub_dir . '/sensors/([0-9]+)/results', function ($matches, $rxd) {
 route('get', $sub_dir . '/sensors/([0-9]+)/results/([0-9]+)', function ($matches, $rxd) {
     $sensorId = $matches[1][0];
     $resultId = $matches[2][0];
-    $data = processKey('get');
 
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = getResultsById($sensorId, $resultId);
-    }
+    $data = getResultsById($sensorId, $resultId);
     
     validateData($data, 'get');
     
@@ -129,12 +102,8 @@ route('get', $sub_dir . '/sensors/([0-9]+)/results/([0-9]+)', function ($matches
 route('post', $sub_dir . '/parkings', function ($matches, $rxd) {
     $json = file_get_contents('php://input');
     $postData = json_decode($json, true);
-    $data = processKey('post');
-
-    // Check if the provided key is valid
-    if ($data === true) {
-        $data = addParking($postData['name'], $postData['address'], $postData['city'], $postData['country']);
-    }
+    
+    $data = addParking($postData['name'], $postData['address'], $postData['city'], $postData['country']);
     
     validateData($data, 'post');
     
@@ -149,18 +118,14 @@ route('post', $sub_dir . '/parkings/([0-9]+)/sensors', function ($matches, $rxd)
     $parkingId = $matches[1][0];
     $json = file_get_contents('php://input');
     $postData = json_decode($json, true);
-    $data = processKey('post');
 
-    // Check if the provided key is valid
-    if ($data === true) {
-        $parkingData = getParkingById($parkingId);
+    $parkingData = getParkingById($parkingId);
+    
+    if (!empty($parkingData)) {
+        $data = addSensor($postData['deviceId'], $parkingId);
         
-        if (!empty($postData) && !empty($parkingData)) {
-            $data = addSensor($postData['deviceId'], $parkingId);
-            validateData($data, 'post');
-        }
+        validateData($data, 'post');
     }
-
     
     echo json_encode($data);
     exit();
@@ -173,16 +138,13 @@ route('post', $sub_dir . '/parkings/([0-9]+)/sensors/results', function ($matche
     $parkingId = $matches[1][0];
     $json = file_get_contents('php://input');
     $postData = json_decode($json, true);
-    $data = processKey('post');
 
-    // Check if the provided key is valid
-    if ($data === true) {
-        $parkingData = getParkingById($parkingId);
+    $parkingData = getParkingById($parkingId);
+    
+    if (!empty($postData) && !empty($parkingData)) {
+        $data = addResult($postData['data'], $postData['device'], $postData['timestamp'], $postData['seqNumber'], $parkingId);
         
-        if (!empty($postData) && !empty($parkingData)) {
-            $data = addResult($postData['data'], $postData['device'], $postData['timestamp'], $postData['seqNumber'], $parkingId);
-            validateData($data, 'post');
-        }
+        validateData($data, 'post');
     }
     
     echo json_encode($data);
